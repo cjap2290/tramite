@@ -1,66 +1,66 @@
-<?php 
+<?php
 require_once('cls/class.acciones.php');
 class Documentos{
-	function Documentos(){	}	
-	function DocumentosPorUusuario($id_usuario){		
-		$return;		
+	function Documentos(){	}
+	function DocumentosPorUusuario($id_usuario){
+		$return;
 		$sql = "SELECT * FROM documentos WHERE id_usuario = '".$id_usuario."' ";
-		$query = new Consulta($sql);		
+		$query = new Consulta($sql);
 		while($row = $query->VerRegistro()){
 			$return[] = array(
-				'id' 		=> $row['id_usuario'], 
-				'codigo' 	=> $row['codigo_usuario'], 
-				'tipo' 		=> $row['id_tipo_documento'], 
-				'numero' 	=> $row['numero_documento'], 
-				'referencia'=> $row['referencia_documento'], 
-				'anexo' 	=> $row['anexo_documento'], 
-				'numero_folio' => $row['numero_folio_documento'], 
-				'fecha' 	=> $row['fecha_documento'], 
-				'asunto' 	=> $row['asunto_documento'], 
-				'fecha_registro' => $row['fecha_registro_documento'], 
-				'observacion' => $row['observacion_documento'], 
-				'prioridad' => $row['prioridad_documento'], 
-				'destino' 	=> $row['destino_documento'], 
-				'remitente' => $row['id_remitente'], 
+				'id' 		=> $row['id_usuario'],
+				'codigo' 	=> $row['codigo_usuario'],
+				'tipo' 		=> $row['id_tipo_documento'],
+				'numero' 	=> $row['numero_documento'],
+				'referencia'=> $row['referencia_documento'],
+				'anexo' 	=> $row['anexo_documento'],
+				'numero_folio' => $row['numero_folio_documento'],
+				'fecha' 	=> $row['fecha_documento'],
+				'asunto' 	=> $row['asunto_documento'],
+				'fecha_registro' => $row['fecha_registro_documento'],
+				'observacion' => $row['observacion_documento'],
+				'prioridad' => $row['prioridad_documento'],
+				'destino' 	=> $row['destino_documento'],
+				'remitente' => $row['id_remitente'],
 				'estado' 	=> $row['id_estado']
 			);
-		}		
-		return $return;		
+		}
+		return $return;
 	}
-	
-	function HistorialDocumentosPorUusuario($id_usuario){		
-		$return;		
+
+	function HistorialDocumentosPorUusuario($id_usuario){
+		$return;
 		$sql = "SELECT * FROM historial_documentos WHERE id_usuario = '".$id_usuario."' ";
-		$query = new Consulta($sql);		
+		$query = new Consulta($sql);
 		while($row = $query->VerRegistro()){
 			$return[] = array(
 				'id' 		=>	$row['id_historial_documento'],
 				'documento'	=>	new Documento($row['id_documento']),
 				'remitente' =>	new Remitente($row['id_remitente']),
 				'destino' 	=>	new Usuario($row['id_usuario_destino']),
-				'fecha' 	=>	$row['fecha_historial_documento'] ,	
+				'fecha' 	=>	$row['fecha_historial_documento'] ,
 				'original'	=>	$row['original_historial_documento'] ,
 				'accion' 	=>	new Accion($row['id_accion']) ,
 				'estado' 	=>	new Estado($row['id_estado']),
 				'usuario' 		=>	new Usuario($row['id_usuario'])
 			);
-		}		
-		return $return;		
+		}
+		return $return;
 	}
-		
-	function listarDocumentosPorUsuario( $usuario ){		
+
+	function listarDocumentosPorUsuario( $usuario ){
 		if(isset($_POST['campo']) && isset($_POST['valor']) && !empty($_POST['campo']) && !empty($_POST['valor'])){
 		 	$docs = $usuario->getIdAtencionPorFiltro($_POST['campo'], $_POST['valor']);
 		}else{
 			$docs = $usuario->getIdAtencion();
 		}
-		 ?>  
+		 ?>
 		<table width="100%" cellpadding="1" cellspacing="1"  id="mantenimiento">
 			<tr class="subtit">
 				<td><div align="center">Reg. N&ordm;</div></td>
 				<td><div align="center">Remitente</div></td>
-				<td><div align="center">Documento</div></td>				
-				<td><div align="center">Fecha de Registro </div></td>				
+				<td><div align="center">Documento</div></td>
+				<td><div align="center">Fecha de Registro </div></td>
 				<td><div align="center">Estado</div></td>
 				<td><div align="center">Cat.</div></td>
 </tr> <?php
@@ -68,9 +68,9 @@ class Documentos{
 				$doc[$d] = new Documento($docs[$d]['id']);
                 $estado = $doc[$d]->getEstado()->getId();
             ?>
-                
+
 			<tr <?echo ($estado==12)?"style='background-color:#ffffcc'":"class='filas'";?>>
-				<td onmouseover="toolTips('<?php echo $doc[$d]->getAsunto(); ?>',this)" >					
+				<td onmouseover="toolTips('<?php echo $doc[$d]->getAsunto(); ?>',this)" >
 					<?php if($estado != 12){ ?>
                     <a href="atencion_acceso_registro.php?opcion=detalle&id=<?php echo $doc[$d]->getId()?>"><?php echo $doc[$d]->getCodigo()?></a>
                     <?}
@@ -78,10 +78,10 @@ class Documentos{
                         echo $doc[$d]->getCodigo();
                     }
                     ?>
-				</td>                
+				</td>
 				<td align="left"><?php $dtd = $doc[$d]->getRemitente(); echo $dtd->getNombre();?></td>
 				<td align="left"><?php echo $doc[$d]->getNumero();?></td>
-				<td><?php echo $doc[$d]->getFechaRegistro(); ?> </td>	
+				<td><?php echo $doc[$d]->getFechaRegistro(); ?> </td>
 				<td><?php $est = $doc[$d]->getEstado(); echo $est->getAbreviatura(); ?></td>
 				<td><?php $cat = $docs[$d]['original']; echo ($cat == 1)?"O":"C"; ?></td>
 			</tr>
@@ -109,11 +109,11 @@ class Documentos{
 						} ?>
 </table>
 				</td>
-			  </tr>-->  <?php				
+			  </tr>-->  <?php
 		}?>
-		<table width="100%" border="1" id="mantenimiento"><?php		
+		<table width="100%" border="1" id="mantenimiento"><?php
 	}
- 	
+
 	function detalleDocumentosPorUsuario( $usuario,  $documento ){
 	  $doc = $documento; ?>
 		  <fieldset><legend>DATOS DEL DOCUMENTO</legend>
@@ -171,7 +171,7 @@ class Documentos{
 			  <td class="Estilo22"><div align="center">:</div></td>
 			  <td colspan="6" ><div align="left"><?php echo $doc->getAnexo() ?> </div></td>
 			</tr>
-			
+
 			<tr>
 			  <td class="Estilo22"><div align="left">Fecha y Hora de Registro</div></td>
 			  <td height="21" class="Estilo22"><div align="center">:</div></td>
@@ -179,30 +179,30 @@ class Documentos{
                 <?php  echo $doc->getFechaRegistro()." ".$doc->getHoraRegistro()?>
               </div></td>
 		    </tr>
-			
+
 			<tr>
 			  <td class="Estilo22"><div align="left">Documento Digitalizado</div></td>
 			  <td height="21" class="Estilo22"> <div align="center">: </div></td>
 			  <td colspan="6" ><div align="left">
 			  <span class="Estilo7">
 	      		<?
-					$escaneo = "SELECT * 
+					$escaneo = "SELECT *
 								from documentos_escaneados de
 								where de.id_documento = ".$doc->getId();
-							
+
 					$qescaneo = new Consulta($escaneo);
-				
+
 			  		$index = 1;
-			
+
 					while($row_reg = $qescaneo->ConsultaVerRegistro()){?>
-						<a href="Escaneo/<?=$row_reg['nombre_documento_escaneado']?>" 
+						<a href="Escaneo/<?=$row_reg['nombre_documento_escaneado']?>"
 						id="<?=$row_reg["id_documento_escaneado"]?>" target="_blank">
 						<?=$index?>
-						</a>				
+						</a>
 					<?
 						$index++;
             		}
-				  	?>               
+				  	?>
     		  </span>
 			  </div>			  </td>
 			</tr>
@@ -228,12 +228,12 @@ class Documentos{
               <td  class="Estilo22"><div align="left">Observaci&oacute;n de Despacho</div></td>
               <td  class="Estilo22"><div  align="center">:</div></td>
               <td colspan="7"><div align="left">
-                <?php   
+                <?php
                      $historial=$doc->getHistorial();
                      foreach($historial as $reg){
                         $area = $reg["area"];
                         if($area->getId()==$_SESSION['session'][5])
-                            echo $reg["observacion"]; 
+                            echo $reg["observacion"];
                      }
                 ?>
               </div></td>
@@ -252,7 +252,7 @@ class Documentos{
           </table>
 		</div>
 	  </fieldset>
-	  
+
 		<fieldset>
 			<legend >ELABORAR BORRADOR DE RESPUESTA</legend>
             <form method="post" id="form_finalizar_documento" name="form_finalizar_documento" action="atencion_acceso_registro.php?opcion=fin&id=<?php echo $doc->getId()?>">
@@ -261,7 +261,7 @@ class Documentos{
               $esOriginal =  $usuario->getIdAtencionPorFiltro($campo);
 			$respuestas = $doc->getBorradoresRespuesta();
 			$tresp = count($respuestas);
-		
+
 			if(is_array($respuestas) && $tresp > 0){
 				for($b = 0; $b < $tresp; $b++ ){ ?>
               <tr>
@@ -275,10 +275,10 @@ class Documentos{
                   </div></td>
                 <? } ?>
               </tr>
-              <?php 
+              <?php
 				  }
 			}  ?>
-              <? 
+              <?
 				if($_SESSION['session'][6]&&$esOriginal){?>
               <tr>
                 <td colspan="3"><label>
@@ -290,9 +290,9 @@ class Documentos{
               </tr>
               <? } ?>
             </table>
-            
+
 			</form>
-		
+
 		<form id="form_borrador_respuesta" name="f1" method="post" action="javascript: validar_historial_atencion(<?php echo $doc->getId()?>)" >
 		  <table width="910" border="0" align="center" bordercolor="#FFFFFF" bgcolor="#FFFFFF" id="mantenimientod">
             <tr>
@@ -304,22 +304,22 @@ class Documentos{
               <td width="13%" class="Estilo22"><div align="left">Pase a</div></td>
               <td width="2%" class="Estilo22"><div align="center">:</div></td>
               <td colspan="2" ><div align="left">
-              <?php 
+              <?php
 
 		  $area = new Area($_SESSION['session'][5]);
 
 		  $usuarios = $area->getUsuarios();
 
-		  $tusuarios = sizeof($usuarios);	 ?> 
+		  $tusuarios = sizeof($usuarios);	 ?>
 
         <select name="usuario" style="width:200px">
-          <option value="">--Seleccione un Usuario--</option><?php 
+          <option value="">--Seleccione un Usuario--</option><?php
 		  for($u = 0; $u < $tusuarios; $u++){ ?>
-		  	 <option value="<?php echo $usuarios[$u]['id']?>"><?php echo $usuarios[$u]['nombre'].' '.$usuarios[$u]['apellidos'] ?></option> 
-	<?php		  		
+		  	 <option value="<?php echo $usuarios[$u]['id']?>"><?php echo $usuarios[$u]['nombre'].' '.$usuarios[$u]['apellidos'] ?></option>
+	<?php
 	  }
-	?>           
-        </select>  
+	?>
+        </select>
 		<input type="hidden" name="area" value="<?php echo $_SESSION['session'][5] ?>" />
 		<input type="hidden" name="user" value="<?php echo $_SESSION['session'][0] ?>" />			  </td>
               <td width="3%" align="left" class="22"><label>
@@ -335,16 +335,16 @@ class Documentos{
               <td class="Estilo22" ><div align="left">Acci&oacute;n</div></td>
               <td class="Estilo22"><div align="center">:</div></td>
               <td width="24%" ><div align="left">
-                  <?php 
+                  <?php
 		  $acciones = new Acciones();
 		  $accions = $acciones->getAcciones();
 		  $tacciones = sizeof($accions);	 ?>
                   <select name="accion" style="width:200px">
                     <option value="">--Seleccione Accion--</option>
-                    <?php 
+                    <?php
 		  for($u = 0; $u < $tacciones; $u++){ ?>
                     <option value="<?php echo $accions[$u]['id']?>"><?php echo $accions[$u]['nombre']?></option>
-                    <?php		  		
+                    <?php
 		  }?>
                   </select>
               </div></td>
@@ -372,8 +372,8 @@ class Documentos{
 		$his = $doc->getHistorialAtencion();
 		$tthis = count($his);
         $hayOriginal = 0;
-        
-		for( $h = 0; $h < $tthis; $h++ ){  ?> 
+
+		for( $h = 0; $h < $tthis; $h++ ){  ?>
 		<tr class="filas">
 		  <td><?php echo $h + 1 ?></td>
 		  <td><?php echo $his[$h]['usuario']->GetNombre() ?></td>
@@ -383,7 +383,7 @@ class Documentos{
 		  <td><?php if($his[$h]['original']==0){$hayOriginal++; echo "original";}else{echo "copia";}?></td>
 		  <td><!-- <a href="#"><img src="public_root/imgs/b_view.png" alt="Ver" width="16" height="16" border="0" /></a> &nbsp; <a href="#"><img src="public_root/imgs/b_drop.png" alt="eliminar" width="16" height="16" border="0" /></a> --></td>
 		</tr>  	<?php
-		} 
+		}
         if($hayOriginal >0){?>
             <script>javascript:deshabilitado();</script>
         <?
@@ -393,19 +393,19 @@ class Documentos{
    	</form>
 </fieldset>
 
-		<?php		
+		<?php
 	}
-	
+
 	function getDocumentosConFiltro(){
-		
-		$where = $campo != "" ? " AND d.$campo like '%$valor%' " : ""  ; 	
-		
+
+		$where = $campo != "" ? " AND d.$campo like '%$valor%' " : ""  ;
+
 		$sql = " SELECT * FROM documentos  ";
 		$query = new Consulta($sql);
-		
-		
+
+
 	}
-	
-	
+
+
 }
 ?>
