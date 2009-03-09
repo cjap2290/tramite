@@ -3,11 +3,11 @@
 var request = false;
 
 $(document).ready(function(){
-						   
+
 esta_habilitado_copia();
 
 $("#form_despacho").validate({
-	error: "error",					 
+	error: "error",
 	rules: {
 		cboprioridad: "required",
 		cboareas: "required",
@@ -19,13 +19,13 @@ $("#form_despacho").validate({
 		cboareas: "",
 		cboaccion: "",
 		radiobutton: ""
-		
+
 	}
-	
+
 });
 
 $("#form_despacho_area").validate({
-	error: "error",					 
+	error: "error",
 	rules: {
 		destino: "required",
 		cboaccion2: "required",
@@ -36,11 +36,11 @@ $("#form_despacho_area").validate({
 		cboaccion2: "",
 		radiobutton: ""
 	}
-	
+
 });
 
 $("#form_editar_documento").validate({
-	error: "error",					 
+	error: "error",
 	rules: {
 		remit1: "required",
 		tipo: "required",
@@ -51,11 +51,11 @@ $("#form_editar_documento").validate({
 		tipo: "",
 		date: ""
 	}
-	
+
 });
 
 $("#form_registrar_documento").validate({
-	error: "error",					 
+	error: "error",
 	rules: {
 		remit: "required",
 		tipo: "required",
@@ -66,29 +66,29 @@ $("#form_registrar_documento").validate({
 		tipo: "",
 		date_registrar: ""
 	}
-	
+
 });
 
 $("#form_nueva_area").validate({
-	error: "error",					 
+	error: "error",
 	rules: {
 		txtnombre: "required",
 		txtabreviatura: "required"
 	},
 	messages: {
-		txtnombre: "Â¡Debe ingresar un nombre de area!",
-		txtabreviatura: "Â¡Debe ingresar una abreviatura!"
+		txtnombre: "¡Debe ingresar un nombre de area!",
+		txtabreviatura: "¡Debe ingresar una abreviatura!"
 	}
-	
+
 });
 
 $("#form_borrador_respuesta").validate({
-	error: "error",					 
+	error: "error",
 	rules: {
 		area: "required",
 		comentario: "required",
 		accion: "required",
-		usuario: "required",		
+		usuario: "required",
 		categoria: "required"
 	},
 	messages: {
@@ -99,16 +99,16 @@ $("#form_borrador_respuesta").validate({
 		categoria: ""
 	}
 	});
-	
+
 $("#form_finalizar_documento").validate({
-	error: "error",					 
+	error: "error",
 	rules: {
 		borrador: "required"
 	},
 	messages: {
 		borrador: ""
 	}
-	
+
 });
 
 if($("#cambiar_destino")){
@@ -130,23 +130,23 @@ if($("#cambiar_destino")){
 $("#images a").click( function(){
 		var title = $(this).attr("title");
 		$("#imgp").hide();
-		$("#imgp").attr("src", title).fadeIn('slow'); 
-	});	 
+		$("#imgp").attr("src", title).fadeIn('slow');
+	});
 
 	$("input[type=radio][name=tcar]").click( function(){
-		$("#carac").empty();	
+		$("#carac").empty();
 		$("#cantidad").val(0);
 	});
 
 	$("#clb").click( function(){
 		$("#cbusqueda").toggle('slow');
 		$("#cfiltrar").hide('slow');
-	});	
+	});
 
 	$("#fil").click( function(){
 		$("#cfiltrar").toggle('slow');
 		$("#cbusqueda").hide('slow');
-	});	
+	});
 
 });
 
@@ -201,7 +201,7 @@ function mostrarDetalle(id){
 }
 
 function verDetalleDoc(){
-    
+
 	$("#detalle_documento").slideToggle("slow");
     if($("#control").attr("class")=="v"){
         $("#control").text("Ocultar Detalles");
@@ -212,7 +212,7 @@ function verDetalleDoc(){
         $("#control").removeAttr("class");
         $("#control").attr("class","v");
     }
-        
+
 }
 
 function imprimir(direccion){
@@ -224,7 +224,7 @@ function imprimir(direccion){
 function validar_finalizar(){
 
 if(!$("#form_finalizar_documento").valid()){
-	alert("Debe seleccionar un borrador");	
+	alert("Debe seleccionar un borrador");
 }else{
 		document.form_finalizar_documento.submit();
 }
@@ -232,24 +232,24 @@ if(!$("#form_finalizar_documento").valid()){
 
 function habilitar_finalizar(){
 	if($("#mantenimientod")!=null){
-		
+
 		var filas = document.getElementById("mantenimientod").rows.length;
 		if(filas<2){
-			$("#mantenimientod").css("display","none");	
+			$("#mantenimientod").css("display","none");
 		}
-	}	
+	}
 }
 
 function esta_habilitado_copia(){
-	
+
 	if(document.getElementById("tabla_despacho")!=null){
-		
+
 		tam = document.getElementById("tabla_despacho").rows.length;
 
 		if(tam == 1){
 				document.getElementById("1").disabled = "disabled";
 		}
-		else{				
+		else{
 				$("#1").removeAttr("disabled");
 		}
 	}
@@ -322,9 +322,9 @@ function checkName(field) {
 
             	}
 
-        	}    
+        	}
 
-		}	
+		}
 
 
 
@@ -344,7 +344,7 @@ function checkName(field) {
 
 		field.focus();
 
-	}	
+	}
 
 }
 
@@ -376,43 +376,43 @@ function cargar(Obj){
 		Obj.focus()
 }
 
-function nuevoAjax(){ 
+function nuevoAjax(){
 
-  var xmlhttp=false; 
+  var xmlhttp=false;
 
-  try { 
+  try {
 
-   // Creaciï¿½n del objeto ajax para navegadores diferentes a Explorer 
+   // Creaci?n del objeto ajax para navegadores diferentes a Explorer
 
-   xmlhttp = new ActiveXObject("Msxml2.XMLHTTP"); 
+   xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
 
-  } catch (e) { 
+  } catch (e) {
 
-   // o bien 
+   // o bien
 
-   try { 
+   try {
 
-     // Creaciï¿½n del objet ajax para Explorer 
+     // Creaci?n del objet ajax para Explorer
 
-     xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); } catch (E) { 
+     xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); } catch (E) {
 
-     xmlhttp = false; 
+     xmlhttp = false;
 
-   } 
+   }
 
-  } 
+  }
 
 
 
-  if (!xmlhttp && typeof XMLHttpRequest!='undefined') { 
+  if (!xmlhttp && typeof XMLHttpRequest!='undefined') {
 
-   xmlhttp = new XMLHttpRequest(); 
+   xmlhttp = new XMLHttpRequest();
 
-  } 
+  }
 
-  return xmlhttp; 
+  return xmlhttp;
 
-} 
+}
 
 
 
@@ -436,7 +436,7 @@ function valida(){
 
 	}
 
-	
+
 
 	document.f1.action='validacion.php';
 
@@ -492,7 +492,7 @@ function validar_opciones(opcion,id){
 
 		document.f1.submit();
 
-	}	
+	}
 
 }
 
@@ -514,7 +514,7 @@ function validar_usuarios(opcion, id){
 
 		document.f1.apellidos.focus();
 
-		return false	
+		return false
 
 	}else if(document.f1.email.value==""){
 
@@ -522,7 +522,7 @@ function validar_usuarios(opcion, id){
 
 		document.f1.email.focus();
 
-		return false	
+		return false
 
 	}else if(document.f1.rol.value==""){
 
@@ -530,7 +530,7 @@ function validar_usuarios(opcion, id){
 
 		document.f1.rol.focus();
 
-		return false	
+		return false
 
 	}else if(document.f1.usuario.value==""){
 
@@ -538,15 +538,15 @@ function validar_usuarios(opcion, id){
 
 		document.f1.usuario.focus();
 
-		return false	
+		return false
 
 	}else if(document.f1.password.value==""){
 
 		alert(" ERROR: Por favor ingrese el password \n que le servira para ingresar al sistema ");
 
-		document.f1.password.focus();	
+		document.f1.password.focus();
 
-		return false;				
+		return false;
 
 	}else{
 
@@ -563,12 +563,12 @@ function validar_categorias(opcion, id1, id){
 	if(document.f1.nombre.value==""  ){
 		alert(" ERROR: Por favor ingrese el nombre de categoria ");
 		document.f1.imagen.focus();
-		return false	
+		return false
 
 	}else if(document.f1.imagen.value=="" && opcion =="addc"){
 		alert(" ERROR: Por favor ingrese la imagen de categoria ");
 		document.f1.imagen.focus();
-		return false	
+		return false
 
 	}else{
 		document.f1.action='productos.php?opcion='+opcion+'&id1='+id1+'&id='+id
@@ -681,12 +681,12 @@ function validar_atributos_valores(opcion, id1, id){
 	}else{
 		document.f1.action = 'atributos_valores.php?opcion='+opcion+'&id1='+id1+'&id='+id;
 		document.f1.submit();
-	}	 	
+	}
 }
 
 
 
-function validar_productos(opcion, id1, id){	
+function validar_productos(opcion, id1, id){
 	if(document.f1.nombre.value==""){
 		alert(" ERROR: Por favor ingrese el nombre del producto ");
 		document.f1.nombre.focus();
@@ -716,15 +716,15 @@ function eliminar_sesion(){
 }
 
 function mantenimiento_categoria(url,opcion,id1,id){
-	if(opcion!="deletep" && opcion!="deletec"){ 
+	if(opcion!="deletep" && opcion!="deletec"){
 		location.replace(url+'?id='+id+'&opcion='+opcion+'&id1='+id1);
 	}else if(opcion=="delete"){
 		if(!confirm("Esta Seguro que desea Eliminar el Registro")){
-			return false;	
+			return false;
 		}else{
-			location.replace(url+'?id='+id+'&opcion='+opcion+'&id1='+id1);			
+			location.replace(url+'?id='+id+'&opcion='+opcion+'&id1='+id1);
 
-		}		
+		}
 
 	}
 
@@ -733,15 +733,15 @@ function mantenimiento_categoria(url,opcion,id1,id){
 
 
 function mantenimiento(url,id,opcion){
-	if(opcion!="delete"){ 
+	if(opcion!="delete"){
 		location.replace(url+'?id='+id+'&opcion='+opcion);
 	}else if(opcion=="delete"){
 		if(!confirm("Esta Seguro que desea Eliminar el Registro")){
-			return false;	
+			return false;
 		}else{
-			location.replace(url+'?id='+id+'&opcion='+opcion);			
+			location.replace(url+'?id='+id+'&opcion='+opcion);
 
-		}		
+		}
 
 	}
 
@@ -764,7 +764,7 @@ function pasa_precio(Obj, receptor, oferta){
 
 }
 
-	
+
 
 function compara_monto(precio, oferta){
 	if(precio.value!=""){
@@ -772,22 +772,22 @@ function compara_monto(precio, oferta){
 			alert("El precio de la oferta tiene que ser menor al precio del producto: "+precio.value );
 			oferta.value="";
 			oferta.focus();
-		}	
+		}
 
-	}		
+	}
 
-}	
+}
 
-function mantenimiento_det(url, id1){	
-			location.replace(url+'?id1='+id1);			
+function mantenimiento_det(url, id1){
+			location.replace(url+'?id1='+id1);
 }
 
 function validar_delete(){
 	if(!confirm("Esta Seguro que desea Eliminar el Registro")){
-		return false;	
+		return false;
 	}else{
-		return true;	
-	}	
+		return true;
+	}
 
 }
 
@@ -800,45 +800,45 @@ function doRound(x, places) {
 function suma_impuesto(precio, impuesto, precioi){
 		if(impuesto.value!="" && precio.value!=""){
 			if(impuesto.value==0){
-				precioi.value = parseFloat(precio.value); 
+				precioi.value = parseFloat(precio.value);
 			}else{
-				prec = parseFloat(precio.value), 
+				prec = parseFloat(precio.value),
 				indice = impuesto.selectedIndex;
 				imp = impuesto.options[indice].value;
-				impu = imp.split("-");	
-				preci = parseFloat(prec + ((parseFloat(impu[1]) * prec) / 100)); 
+				impu = imp.split("-");
+				preci = parseFloat(prec + ((parseFloat(impu[1]) * prec) / 100));
 				precioi.value = doRound(preci,4);
-			}			
+			}
 
 		}else{
 
-			return false;	
+			return false;
 
-		}		
+		}
 
 	}
 
-	
+
 
 	function calcula_precio(total, impuesto, precio){
 		if(impuesto.value!="" && total.value!=""){
 			if(impuesto.value==0){
 				precio.value=total.value
 			}else{
-				tot = parseFloat(total.value); 
+				tot = parseFloat(total.value);
 				indice = impuesto.selectedIndex;
 				imp = impuesto.options[indice].value;
-				impu = imp.split("-");	
+				impu = imp.split("-");
 				//preci = parseFloat(tot - ((parseFloat(impu[1]) * tot) / 100));
 				preci = parseFloat(tot / ((parseFloat(impu[1]) / 100) + 1) )
 				precio.value = doRound(preci, 8);
 			}
 
-		}		
+		}
 
 	}
 
-	
+
 
 	function pasarEmail(repositorio, destinatarios){
 
@@ -848,32 +848,32 @@ function suma_impuesto(precio, impuesto, precioi){
 		for(var i=0; i < rep.length; i++){
 			if(rep.options[i].selected == 1){
 				if(destinatarios.value == ""){
-					destinatarios.value = rep.options[i].value;	
+					destinatarios.value = rep.options[i].value;
 				}else{
 					emails = destinatarios.value.split(",")
 					coincidencias = 0;
 					for(var x = 0; x < emails.length; x++){
 						if(rep.options[i].value == emails[x]){
 						coincidencias++;
-						}	
+						}
 
 					}
 
 					if(coincidencias == 0){
 
-						destinatarios.value += "," + rep.options[i].value;		
+						destinatarios.value += "," + rep.options[i].value;
 
-					}								
+					}
 
 				}
 
 			}
 
-		}	
+		}
 
 	}
 
-	
+
 
 	function validar_boletin(){
 
@@ -895,45 +895,45 @@ function suma_impuesto(precio, impuesto, precioi){
 
 	}
 
-	
+
 
 	function cargar_reporte(){
-		window.open();	
+		window.open();
 	}
 
 
-function validnum(e) { 
-	tecla = (document.all) ? e.keyCode : e.which; 
+function validnum(e) {
+	tecla = (document.all) ? e.keyCode : e.which;
 	//alert(tecla)
-    if (tecla == 8 || tecla == 46) return true; //Tecla de retroceso (para poder borrar) 
-    // dejar la lï¿½nea de patron que se necesite y borrar el resto 
-    //patron =/[A-Za-z]/; // Solo acepta letras 
-    patron = /\d/; // Solo acepta nï¿½meros
-    //patron = /\w/; // Acepta nï¿½meros y letras 
-    //patron = /\D/; // No acepta nï¿½meros 
+    if (tecla == 8 || tecla == 46) return true; //Tecla de retroceso (para poder borrar)
+    // dejar la l?nea de patron que se necesite y borrar el resto
+    //patron =/[A-Za-z]/; // Solo acepta letras
+    patron = /\d/; // Solo acepta n?meros
+    //patron = /\w/; // Acepta n?meros y letras
+    //patron = /\D/; // No acepta n?meros
     // patron = /[\d.-]/; numeros el punto y el signo -
-    te = String.fromCharCode(tecla); 
-    return patron.test(te);  
+    te = String.fromCharCode(tecla);
+    return patron.test(te);
 	// uso  onKeyPress="return validnum(event)"
 }
 
- 
+
 
 function removerDiv(HijoE){
-	$("#"+HijoE).fadeOut('slow', function() { $(this).remove();}); 
+	$("#"+HijoE).fadeOut('slow', function() { $(this).remove();});
 }
 
-function mantenimiento_det(url, id1){	
-	location.replace(url+'?id1='+id1);			
+function mantenimiento_det(url, id1){
+	location.replace(url+'?id1='+id1);
 }
 
 function delete_escaneo(){
 	var f1 = eval("document.fe");
 	$("#msg_delete").hide();
-	if(f1.qdocumento.length > 0){	 
+	if(f1.qdocumento.length > 0){
 
 		for(var i=0; i < f1.qdocumento.length; i++){
-			if(f1.qdocumento[i].checked == 1){			
+			if(f1.qdocumento[i].checked == 1){
 				var id = f1.qdocumento[i].value;
 				$(".escaneo" + id).fadeOut('slow');
 				$("#msg_delete").load("delete_escaneo.php?id="+id).fadeIn("slow");
@@ -944,7 +944,7 @@ function delete_escaneo(){
 
 	}else{
 
-		if(f1.qdocumento.checked == 1){			
+		if(f1.qdocumento.checked == 1){
 
 			var id = f1.qdocumento.value;
 
@@ -952,9 +952,9 @@ function delete_escaneo(){
 
 			$("#msg_delete").load("delete_escaneo.php?id="+id).fadeIn("slow");
 
-		}	
+		}
 
-	}	 			
+	}
 
 }
 
@@ -962,20 +962,20 @@ function delete_escaneo(){
 
 function valida_archivos(){
 
-	var f1 = eval("document.fe");	
-	var tot	= document.fe.elements['doc[]'];	
+	var f1 = eval("document.fe");
+	var tot	= document.fe.elements['doc[]'];
 
 	if(tot.length > 0){
 		for(var t = 0; t < tot.length; t++){
 			if(tot[t].value == ""){
 				alert(" Ingrese la ruta del archivo a subir ");
 				tot[t].focus();
-				return false;	
-			}		
+				return false;
+			}
 
 		}
 
-	}else if(tot.value == ""){ 
+	}else if(tot.value == ""){
 		alert(" Ingrese la ruta del archivo ");
 		tot.focus();
 		return false;
@@ -988,7 +988,7 @@ function valida_archivos(){
 
 function checkTheKey(keyCode){
 
-	if(event.keyCode==13){	
+	if(event.keyCode==13){
 		valida();
 		return true ;
 	}
@@ -998,7 +998,7 @@ function checkTheKey(keyCode){
 
 
 
-function validar_historial_atencion(id){	
+function validar_historial_atencion(id){
 		document.f1.action = 'atencion_acceso_registro.php?opcion=addha&id='+id;
 		document.f1.submit();
 }
@@ -1009,7 +1009,7 @@ var theObj="";
 
 function toolTips(text,me){
 
-      
+
 
 	   theObj=me;
 
@@ -1057,26 +1057,26 @@ function hideMe() {
 
 num_cp = 0;
 
-function crearCarchivo(){	 
-	
+function crearCarchivo(){
 
-	var tot_atrib = document.fe.elements['doc[]'];	
-	if(typeof tot_atrib == 'undefined'){ 
+
+	var tot_atrib = document.fe.elements['doc[]'];
+	if(typeof tot_atrib == 'undefined'){
 		var tota = 0;
-	}else if(tot_atrib.value == ""){		 		
-		var tota = 1; 		
-	}else{		 		
-		var tota = tot_atrib.length; 		
+	}else if(tot_atrib.value == ""){
+		var tota = 1;
+	}else{
+		var tota = tot_atrib.length;
 	};
 
 
-	$(".ileft_img").append("<div id='cp_item_"+ tota + "' class='desc'></div>");	
+	$(".ileft_img").append("<div id='cp_item_"+ tota + "' class='desc'></div>");
 
-	$("#cp_item_"+ tota).append("<label for='imagen'>Documento :</label><input type='file' id='doc[]' name='doc[]' size='41' />");							     
+	$("#cp_item_"+ tota).append("<label for='imagen'>Documento :</label><input type='file' id='doc[]' name='doc[]' size='41' />");
 
 	$("#cp_item_"+ tota).fadeIn("slow");
 
-	
+
 
 	num_cp ++;
 
@@ -1086,23 +1086,23 @@ function crearCarchivo(){
 
 function quitarCarchivo(){
 
-	
 
-	var tot_atrib = document.fe.elements['doc[]'];	
 
-	if(typeof tot_atrib == 'undefined'){ 
+	var tot_atrib = document.fe.elements['doc[]'];
+
+	if(typeof tot_atrib == 'undefined'){
 
 		var tota = 0;
 
-	}else if(tot_atrib.value == ""){		 		
+	}else if(tot_atrib.value == ""){
 
-		var tota = 0; 		
+		var tota = 0;
 
-	}else {		 		
+	}else {
 
-		var tota = parseInt(tot_atrib.length - 1); 
+		var tota = parseInt(tot_atrib.length - 1);
 
-	}	
+	}
 
 	var div = "cp_item_"+ tota;
 
@@ -1118,6 +1118,6 @@ function quitarCarchivo(){
 
 function removerDiv(HijoE){
 
-	$("#"+HijoE).fadeOut('slow', function() { $(this).remove();}); 
+	$("#"+HijoE).fadeOut('slow', function() { $(this).remove();});
 
 }

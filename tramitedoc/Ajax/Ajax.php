@@ -1,4 +1,4 @@
-<?php 
+<?php
 	header ("content-type: text/xml");
 
     require_once("../includes.php");
@@ -37,12 +37,12 @@
                 } ?>
                 </areas>
                 <?php
-                break;            
+                break;
      }
      ?>
     </raiz>
 
-<?php 
+<?php
 
 function cargar_usuarios(){
 
