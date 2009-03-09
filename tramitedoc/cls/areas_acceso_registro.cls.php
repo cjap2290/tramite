@@ -110,8 +110,6 @@ Inner Join `tipos_documento` AS `td` ON `d`.`id_tipo_documento` = `td`.`id_tipo_
 
 WHERE
 
-
-
 d.id_estado >  '1' AND
 
 hd.id_area =  '".$_SESSION['session'][5]."' and
@@ -155,9 +153,11 @@ $query_reg=new Consulta($sql_reg);
 
 		$ids=$row_reg[id_documento];
 		$_POST[remi]=$row_reg[t_remitentenombre];
-		$_POST[ohd]=$row_reg['observacion_historial_documento'];?>
+		$_POST[ohd]=$row_reg['observacion_historial_documento'];
+        $estado=$row_reg["id_estado"];
+        ?>
 
-    <tr class="Estilo7">
+    <tr <?echo ($estado==12)?"class='Estilo7 fila_finalizada'":"class='Estilo7'";?>>
 		<td   onmouseover="toolTips('<?=$row_reg['asunto_documento']?>',this)" >
 			<a href="areas_acceso_registro.php?opcion=despachar&ids=<?=$ids?>"> <?=$row_reg['codigo_documento']?></a>
 		</td>
@@ -264,11 +264,14 @@ function Busqueda($campo, $valor){
 		<?php while($row_reg=$query_reg->ConsultaVerRegistro()){
 				$ids=$row_reg[id_documento];
 				$_POST[remi]=$row_reg[t_remitentenombre];
-				$_POST[ohd]=$row_reg['observacion_historial_documento'];?>
-		
-	<tr class="Estilo7">     
-		  <td   onmouseover="toolTips('<?=$row_reg['asunto_documento']?>',this)" ><a href="areas_acceso_registro.php?opcion=despachar&ids=<?=$ids?>"> <?=$row_reg['codigo_documento']?> </a></td>
-  
+				$_POST[ohd]=$row_reg['observacion_historial_documento'];
+                $estado=$row_reg["id_estado"];
+        ?>
+
+        <tr <?echo ($estado==12)?"class='Estilo7 fila_finalizada'":"class='Estilo7'";?>>
+		<td   onmouseover="toolTips('<?=$row_reg['asunto_documento']?>',this)" >
+			<a href="areas_acceso_registro.php?opcion=despachar&ids=<?=$ids?>"> <?=$row_reg['codigo_documento']?></a>
+		</td>  
 		  <td ><?=$row_reg['nombre_remitente']?></td>
 		  <td ><?=$row_reg['numero_documento']?></td>
 		  <td > <?php echo date('d/m/Y H:i',strtotime($row_reg['fecha_registro_documento']))?></td>
@@ -329,8 +332,6 @@ function Busqueda($campo, $valor){
 
 <? }
 
-
-
 function RegistraEditar(){
 
 	echo 'Pagina en Desarrollo';
@@ -347,15 +348,9 @@ function RegistraUpdate($id){
 
 }
 
-
-
 function RegistraEliminar($id){
 
 }
-
-
-
-
 
 function ConsultarDocumento($ids){
 
@@ -574,12 +569,14 @@ function ConsultarDocumento($ids){
     		$sql_areas="SELECT * FROM usuarios where usuarios.id_area='".$_SESSION['session'][5]."' ";
 	    	$query_areas=new Consulta($sql_areas);
 		?>
-          <select name="destino" id="destino" style="width:200px">
+          <select name="destino" id="destino" style="width:200px" class="usuarios">
             <option value="" selected="selected">--- Seleccione Destino---</option>
             <? while($row_areas=$query_areas->ConsultaVerRegistro()) {?>
             <option value="<? echo $row_areas[0]?>"<? if(isset($_POST['destino']) && $_POST['destino']==$row_areas[0]){ echo "selected";} ?>><? echo $row_areas[nombre_usuario]?><? echo $row_areas[apellidos_usuario]?></option>
             <? } ?>
-        </select></td>
+        </select>
+        <a href="" id="cambiar_destino">areas</a>
+        </td>
 
         <td width="37%" rowspan="3" class="Estilo22" >Observaci&oacute;n Area:
         <textarea name="textarea4" id="textarea4" rows="3" cols="55"><?=$row_td[1]?>
@@ -643,8 +640,6 @@ accion.nombre_accion ASC";
   
 
   <? }
-
-  
 
 function DespacharListarDestino($ids)  {  ?>
 
@@ -770,8 +765,6 @@ function DespacharListarDestino($ids)  {  ?>
     }
 }
 
-
-
 function DespacharGuardarDestino($ids) {
 
 //$ids=$_POST['ids'];
@@ -821,8 +814,6 @@ $qdest=new Consulta($guades);
 			$sma=new Consulta($s_ma);	}
 
 }
-
-
 
 function DespacharEliminarDestino($idp){
 
@@ -878,10 +869,6 @@ function DespacharArchivarDestino($ids){
 					WHERE id_documento='".$ids."'";
 					$q_dev_2=new Consulta($dev_2);	
 	}
-
-
-
-
 
 function DespacharEditarDestino($ids) {
 

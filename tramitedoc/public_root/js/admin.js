@@ -111,6 +111,20 @@ $("#form_finalizar_documento").validate({
 	
 });
 
+if($("#cambiar_destino")){
+    $("#cambiar_destino").change(function(){
+        if($("#destino").attr("class")=="usuarios"){
+            listarAreas();
+            $("#destino").attr("class","areas");
+        }
+        else{
+            listarUsuariosArea();
+            $("#destino").attr("class","usuarios");
+        }
+    }
+    );
+}
+
 $("#images a").click( function(){
 		var title = $(this).attr("title");
 		$("#imgp").hide();
@@ -143,24 +157,63 @@ if (window.XMLHttpRequest) {
 
 }
 
-function mostrarDetalle(id){
+function listarAreas(id_area){
 
-    $("#borrador"+id).css("display", "none");
-    $("#detalle"+id).css("display", "block");
+    $.ajax({
+      type: "POST",
+      url: "Ajax/Ajax.php",
+      data: "metodo=cargar_areas&areas="+id_area,
+      dataType: "xml",
+      success: function(xml){
+        $("#destino").html("");
+
+        $(xml).find('option').each(function(){
+            var id = $(this).attr('value')
+            var name = $(this).text();
+            $("#destino").append('<option value="'+id+'">'+name+'</option>');
+        });
+      }
+    });
 }
 
-function ocultarDetalle(id){
+function listarUsuariosArea(id_area){
 
-    $("#borrador"+id).css("display", "block");
-    $("#detalle"+id).css("display", "none");
+    $.ajax({
+      type: "POST",
+      url: "Ajax/Ajax.php",
+      data: "metodo=cargar_usuarios_area&areas="+id_area,
+      dataType: "xml",
+      success: function(xml){
+        $("#destino").html("");
+
+        $(xml).find('option').each(function(){
+            var id = $(this).attr('value')
+            var name = $(this).text();
+            $("#destino").append('<option value="'+id+'">'+name+'</option>');
+        });
+      }
+    });
+}
+
+function mostrarDetalle(id){
+
+    $("#borrador"+id).toggle("fast");
+    $("#detalle"+id).slideToggle("slow");
 }
 
 function verDetalleDoc(){
-	$("#detalle_documento").css("display", "block");
-}
-
-function ocultarDetalleDoc(){
-	$("#detalle_documento").css("display", "none");
+    
+	$("#detalle_documento").slideToggle("slow");
+    if($("#control").attr("class")=="v"){
+        $("#control").text("Ocultar Detalles");
+        $("#control").removeAttr("class");
+        $("#control").attr("class","o");
+    }else{
+        $("#control").text("Ver Detalles");
+        $("#control").removeAttr("class");
+        $("#control").attr("class","v");
+    }
+        
 }
 
 function imprimir(direccion){

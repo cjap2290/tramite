@@ -387,3 +387,10 @@ textarea.error{
 	background-color: #5C96BB;
 	border: 1px solid #004080;
 }
+
+#control, #control:hover, #control:visited{
+    font-weight:bold;
+}
+.fila_finalizada, .fila_finalizada input{
+    background-color:#ffffcc;
+}

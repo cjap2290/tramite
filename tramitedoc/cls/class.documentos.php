@@ -65,14 +65,22 @@ class Documentos{
 				<td><div align="center">Cat.</div></td>
 </tr> <?php
 			for($d=0; $d < count($docs); $d++ ){
-				$doc[$d] = new Documento($docs[$d]['id']);   ?>
+				$doc[$d] = new Documento($docs[$d]['id']);
+                $estado = $doc[$d]->getEstado()->getId();
+            ?>
                 
-			<tr class="filas">
+			<tr <?echo ($estado==12)?"style='background-color:#ffffcc'":"class='filas'";?>>
 				<td onmouseover="toolTips('<?php echo $doc[$d]->getAsunto(); ?>',this)" >					
-					<a href="atencion_acceso_registro.php?opcion=detalle&id=<?php echo $doc[$d]->getId()?>"><?php echo $doc[$d]->getCodigo()?></a> 
+					<?php if($estado != 12){ ?>
+                    <a href="atencion_acceso_registro.php?opcion=detalle&id=<?php echo $doc[$d]->getId()?>"><?php echo $doc[$d]->getCodigo()?></a>
+                    <?}
+                    else{
+                        echo $doc[$d]->getCodigo();
+                    }
+                    ?>
 				</td>                
-				<td><?php $dtd = $doc[$d]->getRemitente(); echo $dtd->getNombre();?></td>                
-				<td><?php echo $doc[$d]->getNumero();?></td>				
+				<td align="left"><?php $dtd = $doc[$d]->getRemitente(); echo $dtd->getNombre();?></td>
+				<td align="left"><?php echo $doc[$d]->getNumero();?></td>
 				<td><?php echo $doc[$d]->getFechaRegistro(); ?> </td>	
 				<td><?php $est = $doc[$d]->getEstado(); echo $est->getAbreviatura(); ?></td>
 				<td><?php $cat = $docs[$d]['original']; echo ($cat == 1)?"O":"C"; ?></td>
@@ -199,7 +207,7 @@ class Documentos{
 			  </div>			  </td>
 			</tr>
 		  </table>
-		  <p align="left"><a href="javascript:verDetalleDoc()" style="text-decoration:none"><strong>Ver Detalles </strong></a> <a href="javascript:ocultarDetalleDoc()" style="text-decoration:none"><strong>Ocultar Detalles </strong></a></p>
+		  <p align="left"><a href="javascript:verDetalleDoc()" id = "control" class="v" >Ver Detalles </a></p>
 		 <div id="detalle_documento" style="display:none">
 		  <table height="101" border="0" align="center" bordercolor="#000000" bgcolor="#ffffff">
             <tr>
@@ -244,10 +252,11 @@ class Documentos{
           </table>
 		</div>
 	  </fieldset>
-		
+	  
 		<fieldset>
 			<legend >ELABORAR BORRADOR DE RESPUESTA</legend>
-			<table align="center" width="96%" cellpadding="1" cellspacing="1" id="mantenimientod">
+            <form method="post" id="form_finalizar_documento" name="form_finalizar_documento" action="atencion_acceso_registro.php?opcion=fin&id=<?php echo $doc->getId()?>">
+        <table align="center" width="96%" cellpadding="1" cellspacing="1" id="mantenimientod">
               <?php
               $esOriginal =  $usuario->getIdAtencionPorFiltro($campo);
 			$respuestas = $doc->getBorradoresRespuesta();
@@ -256,7 +265,7 @@ class Documentos{
 			if(is_array($respuestas) && $tresp > 0){
 				for($b = 0; $b < $tresp; $b++ ){ ?>
               <tr>
-                <td width="15%"><a href="javascript:mostrarDetalle(<?=$b?>)">+</a> <a href="javascript:ocultarDetalle(<?=$b?>)">-</a> <?php echo $respuestas[$b]['usuario']->getNombreCompleto();  ?> </td>
+                <td width="15%" align="left"><a href="javascript:mostrarDetalle(<?=$b?>)" id="controlador">+ </a><?php echo $respuestas[$b]['usuario']->getNombreCompleto();  ?> </td>
                 <td width="79%" align="left" ><div id="borrador<?=$b?>"><?php echo substr($respuestas[$b]['descripcion'],0,20)."..."?></div>
                     <div id="detalle<?=$b?>" style="display:none"><?php echo nl2br($respuestas[$b]['descripcion'])  ?> </div></td>
                 <? if($_SESSION['session'][6]&&$esOriginal){?>
@@ -281,14 +290,13 @@ class Documentos{
               </tr>
               <? } ?>
             </table>
-
-			<form method="post" id="form_finalizar_documento" name="form_finalizar_documento" action="atencion_acceso_registro.php?opcion=fin&id=<?php echo $doc->getId()?>">
+            
 			</form>
 		
 		<form id="form_borrador_respuesta" name="f1" method="post" action="javascript: validar_historial_atencion(<?php echo $doc->getId()?>)" >
 		  <table width="910" border="0" align="center" bordercolor="#FFFFFF" bgcolor="#FFFFFF" id="mantenimientod">
             <tr>
-              <td width="13%" class="Estilo22" ><div align="left">Ecribir Respuesta</div></td>
+              <td width="13%" class="Estilo22" ><div align="left">Escribir Respuesta</div></td>
               <td width="2%" > <div align="center">: </div></td>
               <td colspan="5"><textarea name="comentario" cols="100" wrap="physical"></textarea></td>
             </tr>
