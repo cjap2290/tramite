@@ -66,16 +66,10 @@ class Documentos{
 </tr> <?php
 			for($d=0; $d < count($docs); $d++ ){
 				$doc[$d] = new Documento($docs[$d]['id']);
+                  
+                 $tem = $doc[$d]->getEstado();
+                 $estado = $tem-> getId();
 
-
-
-
-
-                 $tem =& $doc[$d];
-                 $estado =& $tem->getEstado();
-                 $estado -> getId();
-
-                //$estado = $doc[$d]->getEstado()->getId();
             ?>
 
 			<tr <?echo ($estado==12)?"style='background-color:#ffffcc'":"class='filas'";?>>
@@ -267,14 +261,17 @@ class Documentos{
             <form method="post" id="form_finalizar_documento" name="form_finalizar_documento" action="atencion_acceso_registro.php?opcion=fin&id=<?php echo $doc->getId()?>">
         <table align="center" width="96%" cellpadding="1" cellspacing="1" id="mantenimientod">
               <?php
-              $esOriginal =  $usuario->getIdAtencionPorFiltro($campo);
+            
+            $documentos=$usuario->getIdAtencionPorFiltro("id_documento",$doc->getId());
+            $esOriginal =  ($documentos[0]['original']==1)?true:false;
+
 			$respuestas = $doc->getBorradoresRespuesta();
 			$tresp = count($respuestas);
-
+		    
 			if(is_array($respuestas) && $tresp > 0){
 				for($b = 0; $b < $tresp; $b++ ){ ?>
               <tr>
-                <td width="15%" align="left"><a href="javascript:mostrarDetalle(<?=$b?>)" id="controlador">+ </a><?php echo $respuestas[$b]['usuario']->getNombreCompleto();  ?> </td>
+                <td width="15%" align="left"><a href="javascript:mostrarDetalle(<?=$b?>)" id="controlador">+ </a><?php echo $respuestas[$b]['usuario']->getNombreCompleto(); ?> </td>
                 <td width="79%" align="left" ><div id="borrador<?=$b?>"><?php echo substr($respuestas[$b]['descripcion'],0,20)."..."?></div>
                     <div id="detalle<?=$b?>" style="display:none"><?php echo nl2br($respuestas[$b]['descripcion'])  ?> </div></td>
                 <? if($_SESSION['session'][6]&&$esOriginal){?>
@@ -334,6 +331,9 @@ class Documentos{
               <td width="3%" align="left" class="22"><label>
                 <div align="center">
                   <input name="categoria" type="radio" value="0" id="0"/>
+                  <?if(!$esOriginal){?>
+                    <script>javascript:deshabilitado();</script>
+                  <?}?>
                 </div>
               </label>
                 <label></label></td>
