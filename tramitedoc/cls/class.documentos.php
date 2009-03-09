@@ -66,7 +66,16 @@ class Documentos{
 </tr> <?php
 			for($d=0; $d < count($docs); $d++ ){
 				$doc[$d] = new Documento($docs[$d]['id']);
-                $estado = $doc[$d]->getEstado()->getId();
+
+
+
+
+
+                 $tem =& $doc[$d];
+                 $estado =& $tem->getEstado();
+                 $estado -> getId();
+
+                //$estado = $doc[$d]->getEstado()->getId();
             ?>
 
 			<tr <?echo ($estado==12)?"style='background-color:#ffffcc'":"class='filas'";?>>
