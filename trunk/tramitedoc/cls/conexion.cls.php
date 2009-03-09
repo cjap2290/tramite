@@ -6,7 +6,7 @@ var $link = 0;
 var $host ="localhost";
 //var $user ="areaspro_sistema";
 var $user ="root";
-var $psw  ="vertrigo";
+var $psw  ="root";
 //var $psw  ="AreaProteg2007";
 var $db   ="areaspro_bdstdsernanp";
 
