@@ -112,14 +112,16 @@ $("#form_finalizar_documento").validate({
 });
 
 if($("#cambiar_destino")){
-    $("#cambiar_destino").change(function(){
+    $("#cambiar_destino").click(function(){
         if($("#destino").attr("class")=="usuarios"){
-            listarAreas();
+            listarAreas($("#idArea").val());
             $("#destino").attr("class","areas");
+            $("#cambiar_destino").text("Usuarios");
         }
         else{
-            listarUsuariosArea();
+            listarUsuariosArea($("#idArea").val());
             $("#destino").attr("class","usuarios");
+            $("#cambiar_destino").text("Areas");
         }
     }
     );
@@ -146,10 +148,7 @@ $("#images a").click( function(){
 		$("#cbusqueda").hide('slow');
 	});	
 
-}
-);
-
-
+});
 
 if (window.XMLHttpRequest) {
 
