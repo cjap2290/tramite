@@ -569,13 +569,14 @@ function ConsultarDocumento($ids){
     		$sql_areas="SELECT * FROM usuarios where usuarios.id_area='".$_SESSION['session'][5]."' ";
 	    	$query_areas=new Consulta($sql_areas);
 		?>
+          <input type="hidden" value="<?=$_SESSION['session'][5]?>" id="idArea"/>
           <select name="destino" id="destino" style="width:200px" class="usuarios">
-            <option value="" selected="selected">--- Seleccione Destino---</option>
+            <option value="" selected="selected">--- Seleccione un Usuario---</option>
             <? while($row_areas=$query_areas->ConsultaVerRegistro()) {?>
             <option value="<? echo $row_areas[0]?>"<? if(isset($_POST['destino']) && $_POST['destino']==$row_areas[0]){ echo "selected";} ?>><? echo $row_areas[nombre_usuario]?><? echo $row_areas[apellidos_usuario]?></option>
             <? } ?>
         </select>
-        <a href="" id="cambiar_destino">areas</a>
+        <a href="javascript:void(0);" id="cambiar_destino">Areas</a>
         </td>
 
         <td width="37%" rowspan="3" class="Estilo22" >Observaci&oacute;n Area:
