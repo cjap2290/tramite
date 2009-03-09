@@ -60,8 +60,6 @@ $query_r=new Consulta($sql_r);		 ?>
 
 }
 
-
-
 function EscaneaEditar($id){
 
 $doc = new Documento($id);
@@ -143,11 +141,7 @@ $escaneos = $doc->getEscaneos();  ?>
 
 }
 
-
-
 function EscaneaGuardar(){ 		 
-
-	
 
 	$keys = array_keys($_FILES['doc']);
 
@@ -184,8 +178,6 @@ function EscaneaGuardar(){
 	echo "</div>"; 	
 
 }
-
-
 
  function EscaneaUpdate($id){
 
@@ -237,8 +229,6 @@ function EscaneaGuardar(){
 
 }
 
- 
-
 function EscaneaListado($ide){	  
 
 
@@ -279,12 +269,23 @@ $query = new Consulta($sql); ?>
 
     <?php while($row_reg=$query->ConsultaVerRegistro()){
 
-	$id = $row_reg[0]?>
-
-    <tr class="Estilo2">
-
-      <td onmouseover="toolTips('<?php echo $row_reg['asunto_documento']?>',this)" ><div align="center"><a href="escaneo_acceso_registro.php?opcion=edit&id=<?php echo $id?>"><?php echo $row_reg[1]?></a></div></td>
-
+	$id = $row_reg[0];
+    $estado = $row_reg["id_estado"];
+    ?>
+    <tr <?echo ($estado==12)?"class='Estilo2 fila_finalizada'":"class='Estilo2'";?>>
+    <td onmouseover="toolTips('<?php echo $row_reg['asunto_documento']?>',this)"  ><div align="center">
+    <?php
+           $cod = $row_reg[1];
+           if($estado != 12){?>
+            <a href="Ventanillas_acceso_registro.php?opcion=edit&id=<?=$id?>">
+                <?=$cod?>
+            </a>
+            <?}
+           else{
+              echo $cod;
+           }
+      ?></div>
+      </td>
       <td><input size="50" value="<?php echo $row_reg[nombre_remitente]?>"/></td>
 
       <td><input size="45" value="<?php echo $row_reg[3]?>"/></td> 
@@ -383,118 +384,31 @@ $query = new Consulta($sql); ?>
 
 }
 
-
-
-
-
 function EscaneaGuardarRemitente(){
 
-
-
-
-
-
-
 $nom_remi=$_POST[nom_remi];
-
-
-
 $abrev=$_POST[abrev];
-
-
-
 $tipo_remi=$_POST[tipo_remi];
-
-
-
 $sql_re="Insert Into remitentes Values('','".$tipo_remi."','".$nom_remi."','".$abrev."','')";
-
-
-
-
-
-
-
-
-
-
-
-	$q_remite=new Consulta($sql_re);		
-
-
+$q_remite=new Consulta($sql_re);		
 
 }
 
-
-
-
-
-
-
 function EscaneaEditRemitente($id){
 
-
-
-
-
-
-
-
-
-
-
 $sql_editremi="SELECT
-
-
-
 remitentes.`id_remitente`,
-
-
-
 remitentes.`nombre_remitente`,
-
-
-
 remitentes.`abreviatura_remitente`,
-
-
-
 remitentes.`id_tipo_remitente`
-
-
-
 FROM
-
-
-
 remitentes
-
-
-
 WHERE remitentes.id_remitente='".$id."'
-
-
-
-
-
-
-
 ";
 
-
-
 $editremi=new Consulta($sql_editremi);
-
-
-
 $rowe=$editremi->ConsultaVerRegistro();
-
-
-
 $tipo_remi=$rowe['id_tipo_remitente'];
-
-
-
 ?>
 
 
@@ -669,134 +583,39 @@ $tipo_remi=$rowe['id_tipo_remitente'];
 
 }
 
-
-
 function EscaneaUpdateRemitente($id){
 
-
-
-
-
-
-
 $nom_remi2=$_POST[nom_remi2];
-
-
-
 $abrev2=$_POST[abrev2];
-
-
-
 $tipo_remi2=$_POST[tipo_remi2];
-
-
-
-
-
-
-
 $act_remi=" UPDATE remitentes set
-
 remitentes.`nombre_remitente`='".$nom_remi2."',
-
 remitentes.`id_tipo_remitente`='".$tipo_remi2."',
-
 remitentes.`abreviatura_remitente`='".$abrev2."'
-
-
-
 where remitentes.`id_remitente`='".$id."'
-
-
-
 ";
 
-
-
 $Uremi=new Consulta($act_remi);
-
-
-
-
-
-
-
 }
-
-
 
 function EscaneaNewRemitente(){?>
 
-
-
-
-
-
-
 <form id="f41" name="f41" method="post" action="<?php echo $_SESSION['PHP_SELF']?>?opcion=guardremi">
-
-
-
   <table width="800" border="0" align="center">
-
-
-
     <tr>
-
-
-
       <td width="400">&nbsp;</td>
-
-
-
       <td width="390">&nbsp;</td>
-
-
-
     </tr>
-
-
-
     <tr>
-
-
-
       <td class="Estilo2"><div align="right">Nombre de Remitente: </div></td>
-
-
-
       <td><input name="nom_remi" type="text"/></td>
-
-
-
     </tr>
-
-
-
     <tr>
-
-
-
       <td class="Estilo2"><div align="right">Abreviatura:</div></td>
-
-
-
       <td><input name="abrev" type="text"/></td>
-
-
-
     </tr>
-
-
-
     <tr>
-
-
-
       <td class="Estilo2"><div align="right">Tipo de Remitente: </div></td>
-
-
-
       <?php 
 
 	  $remitente="SELECT
@@ -938,11 +757,23 @@ function Busqueda($campo, $valor){
     <td width="14%"><div align="center" class="msgok1">Ubicacion  </div></td>
   </tr>
     <? while($row_reg=$query_reg->ConsultaVerRegistro()){
-	$id=$row_reg[0]?>
-    <tr class="Estilo2">
-    <td onmouseover="toolTips('<?php echo $row_reg['asunto_documento']?>',this)"  ><div align="center"><a href="Ventanillas_acceso_registro.php?opcion=edit&id=<?=$id?>">
-      <?=$row_reg[1]?>
-    </a></div></td>
+	$id=$row_reg[0];
+    $estado = $row_reg["id_estado"];
+    ?>
+    <tr <?echo ($estado==12)?"class='Estilo2 fila_finalizada'":"class='Estilo2'";?>>
+    <td onmouseover="toolTips('<?php echo $row_reg['asunto_documento']?>',this)"  ><div align="center">
+    <?php
+           $cod = $row_reg[1];
+           if($estado != 12){?>
+            <a href="Ventanillas_acceso_registro.php?opcion=edit&id=<?=$id?>">
+                <?=$cod?>
+            </a>
+            <?}
+           else{
+              echo $cod;
+           }
+      ?>
+    </div></td>
       <!---<td ><=$row_reg[nombre_tipo_documento]?></td>--->
       <td ><input size="48"  value="<?=$row_reg[nombre_remitente]?>"/></td>
       <td ><input size="43" value="<?=$row_reg[3]?>"/></td>
@@ -995,17 +826,6 @@ function Busqueda($campo, $valor){
 
 
 <? }
-
-
-
-
-
-
-
-
-
-
-
 
 }
 

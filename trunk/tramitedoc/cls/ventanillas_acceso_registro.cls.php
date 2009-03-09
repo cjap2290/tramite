@@ -68,12 +68,22 @@ function RegistraListado($ide){
 			<td width="14%"><div align="center" class="msgok1">Ubicacion  </div></td>
 	  	</tr>
 		    <? while($row_reg=$query_reg->ConsultaVerRegistro()){
-                    $id=$row_reg[0]?>
-	   <tr class="Estilo2">
+                    $id=$row_reg[0];
+                    $estado = $row_reg["id_estado"];
+                    ?>
+	   <tr <?echo ($estado==12)?"class='Estilo2 fila_finalizada'":"class='Estilo2'";?>>
 	   		<td onmouseover="toolTips('<?php echo $row_reg['asunto_documento']?>',this)">
-				<div align="center"><a href="Ventanillas_acceso_registro.php?opcion=edit&id=<?=$id?>">
-			    <?=$row_reg[1]?>
-				  </a>
+				<div align="center">
+                <?php 
+                $cod = $row_reg[1];
+                if($estado != 12){ ?>
+                    <a href="Ventanillas_acceso_registro.php?opcion=edit&id=<?=$id?>">
+                    <?=$cod?></a>
+                <?}
+                    else{
+                        echo $cod;
+                    }
+                ?>
 		        </div></td>
 	      	<td ><input size="48"  value="<?=$row_reg[nombre_remitente]?>"/></td>
 		    <td ><input size="43" value="<?=$row_reg[3]?>"/></td>		    
@@ -164,11 +174,23 @@ function Busqueda($campo, $valor){
     <td width="14%"><div align="center" class="msgok1">Ubicacion  </div></td>
   </tr>
     <? while($row_reg=$query_reg->ConsultaVerRegistro()){
-	$id=$row_reg[0]?>
-    <tr class="Estilo2">
-    <td onmouseover="toolTips('<?php echo $row_reg['asunto_documento']?>',this)"  ><div align="center"><a href="Ventanillas_acceso_registro.php?opcion=edit&id=<?=$id?>">
-      <?=$row_reg[1]?>
-    </a></div></td>
+	$id=$row_reg[0];
+    $estado = $row_reg["id_estado"];
+    ?>
+	   <tr <?echo ($estado==12)?"class='Estilo2 fila_finalizada'":"class='Estilo2'";?>>
+	   		<td onmouseover="toolTips('<?php echo $row_reg['asunto_documento']?>',this)">
+				<div align="center">
+                <?php
+                $cod = $row_reg[1];
+                if($estado != 12){ ?>
+                    <a href="Ventanillas_acceso_registro.php?opcion=edit&id=<?=$id?>">
+                    <?=$cod?></a>
+                <?}
+                    else{
+                        echo $cod;
+                    }
+                ?>
+	</div></td>
       <!---<td ><=$row_reg[nombre_tipo_documento]?></td>--->
       <td ><input size="48"  value="<?=$row_reg[nombre_remitente]?>"/></td>
       <td ><input size="43" value="<?=$row_reg[3]?>"/></td>
@@ -579,8 +601,6 @@ function RegistraGuardar(){
 </script>
 <?
   }
-
-
 
  function RegistraUpdate($id){
  

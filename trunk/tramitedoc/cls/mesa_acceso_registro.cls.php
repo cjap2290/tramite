@@ -70,11 +70,24 @@ function Busqueda($campo, $valor){
     
 	<? while($row_reg=$query_reg->ConsultaVerRegistro()){
 	$ids=$row_reg[0];
-	$_POST[remi]=$row_reg[nombre_remitente];?>
-    <tr class="Estilo7">
-      <td <?php if(!empty($row_reg['asunto_documento'])){ ?>  onmouseover="toolTips('<?php echo $row_reg['asunto_documento']?>',this)" <?php } ?> ><div align="center"><a href="mesa_acceso_registro.php?opcion=despachar&ids=<?=$ids?>">
-        <?=$row_reg[1]?>
-      </a></div></td>
+	$_POST[remi]=$row_reg[nombre_remitente];
+    $estado = $row_reg["id_estado"];
+    ?>
+    <tr <?echo ($estado==12)?"class='Estilo7 fila_finalizada'":"class='Estilo7'";?>>
+      <td <?php if(!empty($row_reg['asunto_documento'])){ ?>  onmouseover="toolTips('<?php echo $row_reg['asunto_documento']?>',this)" <?php } ?> ><div align="center">
+      <?php
+                $cod = $row_reg[1];
+           if($estado != 12){ ?>
+              <a href="mesa_acceso_registro.php?opcion=despachar&ids=<?=$ids?>">
+                <?=$cod?>
+              </a>
+              <?}
+           else{
+              echo $cod;
+           }
+                ?>
+          </div>
+      </td>
       <!---<td ><=$row_reg[nombre_tipo_documento]?></td>--->
       <td ><input size="48" value="<?=$row_reg[nombre_remitente]?>"/></td>
       <td ><input size="43" value="<?=$row_reg[numero_documento]?>"/></td>
@@ -151,13 +164,13 @@ if ($ide==''){
 else 
 { $sql_reg="SELECT
 			d.id_documento,
+            d.id_estado,
 			d.codigo_documento,
 			r.nombre_remitente,
 			d.numero_documento,
 			e.nombre_estado,
 			e.abrev_nombre_estado,
-			d.fecha_registro_documento,
-			d.id_estado,
+			d.fecha_registro_documento,			
 			d.asunto_documento
 			FROM
 			documentos AS d
@@ -181,11 +194,24 @@ else
   </tr>
     <? while($row_reg=$query_reg->ConsultaVerRegistro()){
 	$ids=$row_reg[0];
-	$_POST[remi]=$row_reg[nombre_remitente];?>
-    <tr class="Estilo7">
-      <td <?php if(!empty($row_reg['asunto_documento'])){ ?>  onmouseover="toolTips('<?php echo $row_reg['asunto_documento']?>',this)" <?php } ?> ><div align="center"><a href="mesa_acceso_registro.php?opcion=despachar&ids=<?=$ids?>">
-        <?=$row_reg[1]?>
-      </a></div></td>
+	$_POST[remi]=$row_reg[nombre_remitente];
+    $estado = $row_reg["id_estado"];
+    ?>
+    <tr <?echo ($estado==12)?"class='Estilo7 fila_finalizada'":"class='Estilo7'";?>>
+      <td <?php if(!empty($row_reg['asunto_documento'])){ ?>  onmouseover="toolTips('<?php echo $row_reg['asunto_documento']?>',this)" <?php } ?> ><div align="center">
+      <?php
+                $cod = $row_reg[1];
+           if($estado != 12){ ?>
+              <a href="mesa_acceso_registro.php?opcion=despachar&ids=<?=$ids?>">
+                <?=$cod?>
+              </a>
+              <?}
+           else{
+              echo $cod;
+           }
+                ?>
+          </div>
+      </td>
       <!---<td ><=$row_reg[nombre_tipo_documento]?></td>--->
       <td ><input size="48" value="<?=$row_reg[nombre_remitente]?>"/></td>
       <td ><input size="43" value="<?=$row_reg[numero_documento]?>"/></td>
@@ -233,7 +259,7 @@ else
 		
 ?>
       <td >
-	<?  if ($row_reg['id_estado']==4){ echo $u['abve_nombre_area'].' '.$u['login_usuario'];
+	<?  if ($estado==4){ echo $u['abve_nombre_area'].' '.$u['login_usuario'];
 	}
 	 else {
 	  echo $data[2];}?></td>
